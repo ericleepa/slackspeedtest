@@ -50,3 +50,5 @@ Temporary Items
 .idea/vcs.xml
 .idea/slackspeedtest.iml
 .idea/workspace.xml
+config.py
+.pyc

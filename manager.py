@@ -1,4 +1,6 @@
-import speedtest_cli
+import os
+import config
 
-speedtest_cli.main()
+result = os.popen(config.speedtest_cli_dir).read()
 
+print(result)
