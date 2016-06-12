@@ -1,10 +1,11 @@
 import os
 import config
-import speedtest_bot
+import requests
 
-
-def doSpeedTest():
+def do_speed_test():
+    print("run speedtest_cli")
     result = os.popen(config.speedtest_cli_dir).read()
+    print(result)
 
     resultSet = result.split('\n')
     pingResult = resultSet[0]
@@ -16,19 +17,34 @@ def doSpeedTest():
     uploadfloat = float(uploadResult.replace('Upload: ', '').replace(' Mbit/s', ''))
 
     print(pingResult, downloadResult, uploadResult)
-    buildjson(downloadResult, uploadResult, pingResult)
+    analyize_results(downloadfloat, uploadfloat, pingfloat, result)
 
+def analyize_results(downmb, upmb, pingms, result):
+    print(downmb)
+    print(upmb)
+    print(pingms)
+    if downmb <= config.download_threshold or upmb <= config.upload_threshold or pingms >= config.ping_threshold:
+        status = "danger"
+        build_json(result, status)
+    else:
+        status = "good"
+        build_json(result, status)
 
-def buildjson(down, up, ping):
-    test_to_string = ("%s  \n%s \n%s" % (down, up, ping))
+def build_json(result, status):
+    test_to_string = ("%s" % (result))
     list = []
     print(test_to_string)
-    test = {'text': test_to_string, 'color': 'good', 'fallback': 'No speedtest data', 'title': 'Speedtest.net',
-            'pretext': 'Speed test results', 'title_link': 'https://speedtest.net/run'}
+    test = {'text': test_to_string, 'color': status, 'fallback': 'No speed test data', 'title': 'Speedtest.net',
+            'pretext': "Speed test results", 'title_link': 'https://speedtest.net/run'}
     list.append(test)
+    if status == "danger":
+        test.update({"footer": "<!channel>"})
     payload = {'attachments': list}
     print(payload)
-    speedtest_bot.post_to_slack(payload)
+    post_to_slack(payload)
 
+def post_to_slack(json):
+    r = requests.post(config.slack_webhook_url, json=json)
+    print(r)
 
-doSpeedTest()
+do_speed_test()
