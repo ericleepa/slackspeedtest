@@ -18,6 +18,7 @@ log_file = "Location of where you would like to put a log file (csv) ex: C:/log.
 ```
 
 ###Example
+Speed test results below the tresholds specified trigger an @channel notification and change attachment color to red. 
 ![Example](http://i.imgur.com/qI1DqfV.jpg)
 
 
