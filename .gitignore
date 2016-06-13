@@ -52,4 +52,4 @@ Temporary Items
 .idea/workspace.xml
 config.py
 .pyc
-__pycache__/config.cpython-35.pyc
+__pycache__
