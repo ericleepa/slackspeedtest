@@ -51,8 +51,10 @@ Temporary Items
 .idea/slackspeedtest.iml
 .idea/workspace.xml
 config.py
+config.pyc
 .pyc
 <<<<<<< HEAD
 __pycache__
 __pycache__/
-
+venv/
+log.csv

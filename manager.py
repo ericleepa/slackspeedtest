@@ -13,14 +13,13 @@ def do_speed_test():
     pingResult = resultSet[0]
     downloadResult = resultSet[1]
     uploadResult = resultSet[2]
-
     pingfloat = float(pingResult.replace('Ping: ', '').replace(' ms', ''))
     downloadfloat = float(downloadResult.replace('Download: ', '').replace(' Mbit/s', ''))
     uploadfloat = float(uploadResult.replace('Upload: ', '').replace(' Mbit/s', ''))
 
     print(pingResult, downloadResult, uploadResult)
 
-    with open(config.log_file, 'a', newline='') as log:
+    with open(config.log_file, 'a') as log:
         csvw = csv.writer(log, delimiter=',')
         data = [str(pingfloat), str(downloadfloat), str(uploadfloat), str(datetime.now())]
         print(data)
